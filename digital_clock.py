@@ -1,30 +1,50 @@
-import time
-from tkinter import *
-from tkinter.ttk import *
+import tkinter as tk
 from time import strftime
 
-root = Tk() 
-root.title('Clock') 
+def light_theme():
+    frame = tk.Frame(root, bg = "white")
+    frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.8)
+    lbl_1 = tk.Label(frame, font = ('calibri', 40, 'bold'), background = 'White', foreground = 'black')
+    lbl_1.pack(anchor = "s")
 
-def time(): 
-	string = strftime('%H:%M:%S %p') 
-	lbl.config(text = string) 
-	lbl.after(1000, time) 
+    def time():
+        string = strftime('%I:%M:%S %p')
+        lbl_1.config(text = string)
+        lbl_1.after(1000, time)
+    time()
 
-lbl = Label(root, font = ('calibri', 40, 'bold', 'italic'), 
-			background = 'Black', 
-			foreground = 'Yellow') 
-lbl.pack(anchor = 'center') 
-time() 
-mainloop()
+def dark_theme():
+    frame = tk.Frame(root, bg = "#22478a")
+    frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.8)
+    lbl_2 = tk.Label(frame, font = ('calibri', 40, 'bold'), background = '#22478a', foreground = 'black')
+    lbl_2.pack(anchor = "s")
 
-label = Label(root, font=("Arial", 30, 'bold'), bg="black", fg="white", bd =30)
-label.grid(row =0, column=1)
+    def time():
+        string = strftime('%I:%M:%S %p')
+        lbl_2.config(text = string)
+        lbl_2.after(1000, time)
+    time()
 
-def dig_clock():
-    text_input = time.strftime("%H : %M : %S") 
-    label.config(text=text_input)
-    label.after(200, dig_clock)
-    
-dig_clock()
+root = tk.Tk()
+root.title("Digital-Clock")
+canvas = tk.Canvas(root, height = 140, width = 400)
+canvas.pack()
+
+frame = tk.Frame(root, bg = '#22478a')
+frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.8)
+lbl = tk.Label(frame, font = ('calibri', 40, 'bold'), background = '#22478a', foreground = 'black')
+lbl.pack(anchor = "s")
+
+def time():
+    string = strftime('%I:%M:%S %p')
+    lbl.config(text = string)
+    lbl.after(1000, time)
+time()
+
+menubar = tk.Menu(root)
+theme_menu = tk.Menu(menubar, tearoff = 0)
+theme_menu.add_command(label = "Light", command = light_theme)
+theme_menu.add_command(label = "Dark", command = dark_theme)
+menubar.add_cascade(label = "Theme", menu = theme_menu)
+root.config(menu = menubar)
 root.mainloop()
